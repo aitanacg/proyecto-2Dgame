@@ -29,7 +29,7 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
-         
+
         try {
             System.out.println("Image loading started");
             System.out.println(getClass().getResource("/player/girl_up_1.png"));
@@ -46,49 +46,64 @@ public class Player extends Entity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-            
 
     }
-/*
-    private void getPlayerImage() { //CHAT
-    System.out.println("Image loading started");
-    up1    = loadCP("/player/girl_up_1.png");
-    up2    = loadCP("/player/girl_up_2.png");
-    down1  = loadCP("/player/girl_down_1.png");
-    down2  = loadCP("/player/girl_down_2.png");
-    left1  = loadCP("/player/girl_left_1.png");
-    left2  = loadCP("/player/girl_left_2.png");
-    right1 = loadCP("/player/girl_right_1.png");
-    right2 = loadCP("/player/girl_right_2.png");
-    System.out.println("Image loading ended");
-}
-
-private java.awt.image.BufferedImage loadCP(String cpPath) { //CHAT
-    try (var is = getClass().getResourceAsStream(cpPath)) {
-        System.out.println("→ " + cpPath + " = " + getClass().getResource(cpPath));
-        if (is == null) throw new java.io.IOException("Recurso no encontrado: " + cpPath);
-        return javax.imageio.ImageIO.read(is);
-    } catch (java.io.IOException e) {
-        throw new RuntimeException(e);
-    }
-}
-*/
+    /*
+     * private void getPlayerImage() { //CHAT
+     * System.out.println("Image loading started");
+     * up1 = loadCP("/player/girl_up_1.png");
+     * up2 = loadCP("/player/girl_up_2.png");
+     * down1 = loadCP("/player/girl_down_1.png");
+     * down2 = loadCP("/player/girl_down_2.png");
+     * left1 = loadCP("/player/girl_left_1.png");
+     * left2 = loadCP("/player/girl_left_2.png");
+     * right1 = loadCP("/player/girl_right_1.png");
+     * right2 = loadCP("/player/girl_right_2.png");
+     * System.out.println("Image loading ended");
+     * }
+     * 
+     * private java.awt.image.BufferedImage loadCP(String cpPath) { //CHAT
+     * try (var is = getClass().getResourceAsStream(cpPath)) {
+     * System.out.println("→ " + cpPath + " = " + getClass().getResource(cpPath));
+     * if (is == null) throw new java.io.IOException("Recurso no encontrado: " +
+     * cpPath);
+     * return javax.imageio.ImageIO.read(is);
+     * } catch (java.io.IOException e) {
+     * throw new RuntimeException(e);
+     * }
+     * }
+     */
 
     public void update() {
 
-        if (keyH.upPressed == true) {
-            direction = "up";
-            y -= speed;
-        } else if (keyH.downPressed == true) {
-            direction = "down";
-            y += speed;
-        } else if (keyH.leftPressed == true) {
-            direction = "left";
-            x -= speed;
-        } else if (keyH.rightPressed == true) {
-            direction = "right";
-            x += speed;
+        if (keyH.upPressed == true || keyH.downPressed == true ||
+                keyH.leftPressed == true || keyH.rightPressed == true) {
+
+            if (keyH.upPressed == true) {
+                direction = "up";
+                y -= speed;
+            } else if (keyH.downPressed == true) {
+                direction = "down";
+                y += speed;
+            } else if (keyH.leftPressed == true) {
+                direction = "left";
+                x -= speed;
+            } else if (keyH.rightPressed == true) {
+                direction = "right";
+                x += speed;
+            }
+
+            spriteCounter++;
+            if (spriteCounter > 12) {
+                if (spriteNum == 1) {
+                    spriteNum = 2;
+                } else if (spriteNum == 2) {
+                    spriteNum = 1;
+                }
+                spriteCounter = 0;
+            }
         }
+
     }
 
     public void draw(Graphics2D g2) {
@@ -97,16 +112,36 @@ private java.awt.image.BufferedImage loadCP(String cpPath) { //CHAT
 
         switch (direction) {
             case "up":
-                image = up1;
+                if (spriteNum == 1) {
+                    image = up1;
+                }
+                if (spriteNum == 2) {
+                    image = up2;
+                }
                 break;
             case "down":
-                image = down1;
+                if (spriteNum == 1) {
+                    image = down1;
+                }
+                if (spriteNum == 2) {
+                    image = down2;
+                }
                 break;
             case "left":
-                image = left1;
+                if (spriteNum == 1) {
+                    image = left1;
+                }
+                if (spriteNum == 2) {
+                    image = left2;
+                }
                 break;
             case "right":
-                image = right1;
+                if (spriteNum == 1) {
+                    image = right1;
+                }
+                if (spriteNum == 2) {
+                    image = right2;
+                }
                 break;
 
         }
